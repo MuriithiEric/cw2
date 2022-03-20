@@ -5,6 +5,7 @@ const fs = require("fs");
 const http = require("http");
 const app = express();
 const port = process.env.PORT || 3000;
+var { MongoClient } = require("mongodb");
 
 // MIDDLEWARES
 // use Parser Middleware
@@ -41,7 +42,7 @@ app.use(cors());
 MongoClient.connect(
   "mongodb+srv://eric:1234@cluster0.xg0ak.mongodb.net/test",
   (err, client) => {
-    db = database.db("After-School");
+    db = client.db("After-School");
   }
 );
 
