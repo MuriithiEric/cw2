@@ -1,0 +1,21 @@
+{
+  "name": "eric",
+  "version": "1.0.0",
+  "description": "pwa for coursework 2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Eric",
+  "license": "ISC",
+  "dependencies": {
+    "app": "^0.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "logger": "^0.0.1",
+    "mongodb": "^4.4.1",
+    "path": "^0.12.7"
+  }
+}
