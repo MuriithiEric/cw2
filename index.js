@@ -41,7 +41,7 @@ app.use(cors());
 MongoClient.connect(
   "mongodb+srv://eric:1234@cluster0.xg0ak.mongodb.net/test",
   (err, client) => {
-    db = client.db("After-School");
+    db = database.db("After-School");
   }
 );
 
