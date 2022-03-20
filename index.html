@@ -13,7 +13,7 @@
     />
     <!-- Font Awesome Scripts -->
 
-    <link rel="stylesheet" href="first.css" />
+    <link rel="stylesheet" href="./first.css" />
     <!-- Javascript lessons object -->
   </head>
   <body>
@@ -141,7 +141,7 @@
               <div class="form-group col-4">
                 <button
                   class="btn btn-primary"
-                  v-if="checkout"
+                  v-if="checkout1"
                   v-on:click="submitForm"
                 >
                   Checkout
@@ -166,13 +166,13 @@
             name: "",
             number: "",
           },
-          data: () => ({
-            name: "",
-            firstName: "",
-          }),
+          // data: () => ({
+          //   name: "",
+          //   firstName: "",
+          // }),
           sitename: "Individual Task",
           showLesson: true,
-          lessons: lessons,
+          lessons: [],
           cart: [],
           sort: "subj",
           ord: "asc",
@@ -182,13 +182,13 @@
           //created function fetches the lessons
 
           //fetching the lessons from server
-          fetch(
-            "https://cst3145cwhadassah.herokuapp.com/collection/lessons"
-          ).then(function (response) {
-            response.json().then(function (json) {
-              schoolClub.lessons = json;
-            });
-          });
+          fetch("https://muriithieric.herokuapp.com/collection/lessons").then(
+            function (response) {
+              response.json().then(function (json) {
+                this.lessons = json;
+              });
+            }
+          );
         },
         methods: {
           /*addToCart: function () {
@@ -312,7 +312,7 @@
             }
             return count;
           },
-          checkout: function () {
+          checkout1: function () {
             alert("Form has been submitted");
           },
         },
