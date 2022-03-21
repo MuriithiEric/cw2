@@ -120,6 +120,7 @@
         <form>
           <div class="row m-5">
             <div class="form-group col-4">
+              <strong id="successfulCheckout"></strong>
               <input
                 v-model="order.name"
                 class="form-control border-top-0 border-left-0 border-right-0"
@@ -141,7 +142,7 @@
               <div class="form-group col-4">
                 <button
                   class="btn btn-primary"
-                  v-if="checkout1"
+                  v-if="checkout"
                   v-on:click="submitForm"
                 >
                   Checkout
