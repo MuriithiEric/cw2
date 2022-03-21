@@ -185,7 +185,7 @@
           fetch("https://coursework-two.herokuapp.com/collection/lessons").then(
             function (response) {
               response.json().then(function (json) {
-                afterSchool.lessons = json;
+                this.lessons = json;
               });
             }
           );
