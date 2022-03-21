@@ -22,7 +22,7 @@
         <h1 v-text="sitename"></h1>
       </header>
 
-      <div v-if="showLesson">
+      <div v-if="showlesson">
         <div>
           <button
             v-on:click="showCheckout"
@@ -77,7 +77,7 @@
       <br />
       <!-- Entry point of our application -->
 
-      <div v-if="showLesson">
+      <div v-if="showlesson">
         <div v-for="lesson in sortedLessons(sort, ord)">
           <div class="row">
             <div class="column">
@@ -117,7 +117,7 @@
           <button v-on:click="removeItem(lesson)">Remove Item</button><br />
         </div>
 
-        <form>
+        <form @submit.prevent="submitForm">
           <div class="row m-5">
             <div class="form-group col-4">
               <strong id="successfulCheckout"></strong>
@@ -142,7 +142,7 @@
               <div class="form-group col-4">
                 <button
                   class="btn btn-primary"
-                  v-if="checkout"
+                  v-if="submitForm"
                   v-on:click="submitForm"
                 >
                   Checkout
@@ -172,7 +172,7 @@
           //   firstName: "",
           // }),
           sitename: "Individual Task",
-          showLesson: true,
+          showlesson: false,
           lessons: [],
           cart: [],
           sort: "subj",
@@ -183,10 +183,14 @@
           //created function fetches the lessons
 
           //fetching the lessons from server
+          const app = this;
+          console.log(this);
           fetch("https://coursework-two.herokuapp.com/collection/lessons").then(
             function (response) {
+              console.log(this);
               response.json().then(function (json) {
-                this.lessons = json;
+                app.showlesson = true;
+                app.lessons = json;
               });
             }
           );
@@ -201,7 +205,7 @@
             this.cart.splice(this.cart.indexOf(lesson));
           },
           showCheckout() {
-            this.showLesson = this.showLesson ? false : true;
+            this.showlesson = this.showlesson ? false : true;
           },
           addToCart(lesson) {
             this.cart.push(lesson);
@@ -209,9 +213,9 @@
           canAddToCart(lesson) {
             return lesson.space > this.cartCount(lesson);
           },
-          submitForm() {
-            alert("Order submitted!");
-          },
+          // submitForm() {
+          //   alert("Order submitted!");
+          // },
           isLetter(e) {
             let char = String.fromCharCode(e.keyCode); // Get the character
             if (/^[A-Za-z]+$/.test(char)) return true;
@@ -313,25 +317,21 @@
             }
             return count;
           },
-          checkout() {
+          submitForm() {
             if (this.order.name && this.order.number) {
               alert("Form has been submitted");
-              document.getElementById("successfulCheckout").innerHTML =
-                "Thank you for purchasing! <br>";
+              // document.getElementById("successfulCheckout").innerHTML =
+              //   "Thank you for purchasing! <br>";
 
               //function to add the order to the database
-              addOrder(
-                this.lessonOrder.name,
-                this.lessonOrder.phone,
-                this.cart
-              );
+              addOrder(this.order.name, this.order.phone, this.cart);
 
               //function to update the spaces of the lessons
               updateorder(this.cart);
 
               //clearing the fields
-              this.lessonOrder.name = "";
-              this.lessonOrder.phone = "";
+              this.order.name = "";
+              this.order.phone = "";
               this.cart.splice(0, this.cart.length);
             } else if (this.cart.length == 0) {
               alert("No products in cart!");
@@ -367,7 +367,7 @@
 
               //POST request to add the order to the database.
               fetch(
-                "https://cors-anywhere.herokuapp.com/coursework-two.herokuapp.com/collection/orders",
+                "https://coursework-two.herokuapp.com/collection/orders",
                 {
                   method: "POST",
                   headers: {
